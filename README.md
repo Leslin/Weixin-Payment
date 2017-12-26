@@ -35,6 +35,11 @@ graph LR
 ```
 修改 app_id、mch_id(服务商商户id)、md5_key(支付key)、notify_url(回调地址)等参数
 
+微信支付接口地址
+```
+/extend/Payment/Pay/Wx/AppCharge.php/
+```
+
 ### 2.用生成的token调用支付接口
 - 接口请求地址 POST
 
@@ -46,13 +51,13 @@ https://****.com/v1/pay
 请求成功后，接口会同步返回一个支付链接地址，地址生成了一个唯一的支付token，用户识别订单，用户只需要点击该链接地址就会自动跳转至微信jsapi支付。
 
 如图
-![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/11.png)
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/11.png) 
 ### 3.微信公众号配置
 
 - 微信基础类Wechat.php在v1/目录下，这里微信的基类的作用是用户点击点击支付链接，进行微信授权，拿到用户的openid，根据支付的token提交支付订单给微信，根据返回的预支付id等参数调用jsapi进行支付。
 
 ### 4.支付回调
-- 后台增加一个支付调用者，就会对应填写客户的回调域名，在客户调用支付成功后，系统会收到微信回调通知，系统同步把微信通知数据post给客户填写的回调域名。这里数据的sign做了重新处理，根据客户的私钥重新进行了签名，保证数据安全
+- 后台增加一个支付调用者，就会对应填写客户的回调域名，在客户调用支付成功后，系统会收到微信回调通知，系统同步把微信通知数据post给客户填写的回调域名。这里数据的sign做了重新处理，根据客户的私钥重新进行了签名，保证数据安全。
 
 ```
         unset($data['sign']); //去除签名
