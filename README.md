@@ -9,6 +9,7 @@
 - 支持支付宝等交易 
 - 交易商户对账、不同管理员对账管理
 - 商户权限检测
+- 支持扫码手动输入金额付款
 
 ## 架构
 - 代码基于ThinkPHP5.0开发，结合restful api进行接口权限管理，具体restful api请看本github第一个项目，这里不做具体演示。
@@ -41,11 +42,11 @@ graph LR
 https://****.com/v1/pay
 ```
 如图：
-
-请求成功后，接口会同步返回一个支付链接地址，用户只需要点击该链接地址就会自动跳转至微信jsapi支付。
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/8.png)
+请求成功后，接口会同步返回一个支付链接地址，地址生成了一个唯一的支付token，用户识别订单，用户只需要点击该链接地址就会自动跳转至微信jsapi支付。
 
 如图
-
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/11.png)
 ### 3.微信公众号配置
 
 - 微信基础类Wechat.php在v1/目录下，这里微信的基类的作用是用户点击点击支付链接，进行微信授权，拿到用户的openid，根据支付的token提交支付订单给微信，根据返回的预支付id等参数调用jsapi进行支付。
@@ -78,3 +79,12 @@ https://****.com/v1/pay
 		}
 ```
 
+### 5.手动输入付款金额付款
+- 系统支持用户扫码手动输入付款金额进行付款，该支付方式不需要调用API，直接提供一个生产二维码的URL，具体控制在/v1/Inputpay.php，提取出链接后，直接在草料等平台生产二维码即可
+如图
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/12.png)
+
+### 6.商户防封检测
+- 当系统支付客户接入过多后，会造成商户支付权限被冻结，导致支付失败，这里提供了商户支付权限检测功能，代码位置在/v1/Inputpay.php test方法
+如图
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/13.png)
