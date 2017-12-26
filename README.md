@@ -12,8 +12,7 @@
 - 支持扫码手动输入金额付款
 
 ## 架构
-- 代码基于ThinkPHP5.0开发，结合restful api进行接口权限管理，具体restful api请看本github第一个项目，这里不做具体演示。
-
+- 代码基于ThinkPHP5.0开发，结合restful api进行接口权限管理，具体restful api(github地址：https://github.com/Leslin/thinkphp5-restfulapi)请看本github第一个项目，这里不做具体演示。
 
 
 ```
