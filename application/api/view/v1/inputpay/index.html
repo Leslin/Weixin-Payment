@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<title>输入金额付款</title>
+<style>
+.weui-wepay-pay-wrap{
+  background-color: #fbf9fe;
+}
+.weui-msg{
+  position: relative;
+  z-index: 1;
+}
+.weui-wepay-pay {
+  position: relative;
+  z-index: 1;
+  padding: 15px;
+}
+.weui-wepay-pay__inner {
+  background-color: #FFFFFF;
+  padding: 16px;
+  position: relative;
+  z-index: 0;
+}
+.weui-wepay-pay__inner:after {
+  content: " ";
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #DDDDDD;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  box-sizing: border-box;
+}
+.weui-wepay-pay__title {
+  font-size: 12px;
+  color: #333333;
+  font-weight: normal;
+}
+.weui-wepay-pay__inputs {
+  margin-top: 12px;
+  padding-bottom: 18px;
+  position: relative;
+  z-index: 2;
+  color: #333333;
+}
+.weui-wepay-pay__inputs:after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1px solid #DDDDDD;
+  color: #DDDDDD;
+  transform-origin: 0 100%;
+  transform: scaleY(0.5);
+}
+.weui-wepay-pay__strong {
+  position: absolute;
+  color: #000000;
+  font-size: 28px;
+  line-height: 1;
+  left: -6px;
+  top: 8px;
+  font-weight: normal;
+}
+.weui-wepay-pay__input {
+  padding-left: 28px;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  outline: 0;
+  height: 40px;
+  line-height: 40px;
+  font-size: 40px;
+}
+.weui-wepay-pay__input::-webkit-textfield-decoration-container {
+  background-color: transparent;
+}
+.weui-wepay-pay__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.weui-wepay-pay__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+.weui-wepay-pay__input::-webkit-input-placeholder {
+  color: #EEEEEE;
+}
+.weui-wepay-pay__intro {
+  font-size: 12px;
+  color: #9e9e9e;
+  margin-top: 14px;
+}
+.weui-wepay-pay__info {
+  font-size: 12px;
+  color: #9e9e9e;
+  margin-top: 16px;
+  text-align: center;
+}
+.weui-wepay-pay__btn {
+  margin-top: 12px;
+}
+.weui-wepay-logo-default{
+  font-size: 16px;
+}
+</style>
+</head>
+<!-- 
+	通用说明： 
+	1.模块的隐藏添加class:hide;
+	2.body标签默认绑定ontouchstart事件，激活所有按钮的:active效果
+-->
+<body ontouchstart class="weui-wepay-pay-wrap">
+
+<div class="js_dialog" id="iosDialog2" style="opacity: 1;display:none;">
+  <div class="weui-mask"></div>
+  <div class="weui-dialog">
+    <div class="weui-dialog__bd"></div>
+    <div class="weui-dialog__ft">
+      <a href="javascript:;" onclick="js_dialog_hide();" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+    </div>
+  </div>
+</div>
+<div class="weui-wepay-pay">
+    <div class="weui-wepay-pay__bd">
+        <div class="weui-wepay-pay__inner">
+            <h1 class="weui-wepay-pay__title">付款金额(元)</h1>
+            <div class="weui-wepay-pay__inputs"> <strong class="weui-wepay-pay__strong">￥</strong>
+                <input type="number" id="inputMoney" class="weui-wepay-pay__input" placeholder="请输入金额"></div>
+            <div class="weui-wepay-pay__intro">最多可输入金额10000元</div>
+            
+        </div>
+        <div class="weui-cell">
+              
+              <div class="weui-cell__bd">
+                <input class="weui-input" id="note" type="text" style="font-size:14px;"  placeholder="输入备注">
+              </div>
+            </div>
+        
+
+    </div>
+    <div class="weui-wepay-pay__ft">
+        <p class="weui-wepay-pay__info">支付金额给商户</p>
+        <div class="weui-wepay-pay__btn">
+            <a href="javascript:;" id = "button" class="weui-btn weui-btn_primary"><i class="weui-loading" style="display:none;"></i>立即支付</a>
+            
+        </div>
+    </div>
+</div>
+<div class="weui-wepay-logos weui-wepay-logos_ft">
+    <img src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+</div>
+<script>
+    
+    $("#button").click(function(){
+       show_load();
+       var moeny = $("#inputMoney").val();
+       
+       isMoney(moeny);
+    })
+
+    function isMoney(s) {   
+       if(s > 10000){
+         js_dialog_show('最多只能支付10000元');
+         return false;
+       }
+       if(s == ''){
+         js_dialog_show('金额不能为空');
+         return false;
+       }
+
+       create(s);
+    }
+  
+    function js_dialog_show (text) {
+      $(".weui-dialog__bd").text(text);
+      $("#iosDialog2").show();
+    }
+
+    function js_dialog_hide () {
+      $("#iosDialog2").hide();
+      hide_load();
+    }
+    function show_load () {
+        $("#button").text("加载中...");
+        $("#button").attr("disabled", true);
+        $("#button").addClass("weui-btn_loading");
+        $(".weui-loading").show();
+    }
+    function hide_load () {
+        $("#button").text("立即支付");
+        $("#button").attr("disabled", false);
+        $("#button").removeClass("weui-btn_loading");
+        $(".weui-loading").hide();
+    }
+    function create (money) {
+      var note = $("#note").val();
+      $.ajax({
+          type: 'post',
+          url: '/v1/Inputpay/createOrder',
+          data: {
+            
+            moeny:money,
+            note:note,
+            valuetoken:'{$valuetoken}'
+            
+          }, 
+          success: function (res) {
+            if(res.status == 1){
+              window.location.href = res.msg;
+            }else{
+              hide_load();
+              js_dialog_show(res.msg);
+              return false;
+            }
+          }, error: function (res) {
+            js_dialog_show('网络错误');
+            return false;
+          } 
+      });
+    }
+    $("#inputMoney").keyup(function () { 
+        var reg = $(this).val().match(/\d+\.?\d{0,2}/); 
+        var txt = ''; 
+        if (reg != null) { 
+            txt = reg[0]; 
+        } 
+        $(this).val(txt); 
+    }).change(function () { 
+        $(this).keypress(); 
+        var v = $(this).val(); 
+        if (/\.$/.test(v)) 
+        { 
+            $(this).val(v.substr(0, v.length - 1)); 
+        } 
+    }); 
+</script>
+</body>
+</html>
