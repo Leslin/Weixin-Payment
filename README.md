@@ -88,3 +88,34 @@ https://****.com/v1/pay
 - 当系统支付客户接入过多后，会造成商户支付权限被冻结，导致支付失败，这里提供了商户支付权限检测功能，代码位置在/v1/Inputpay.php test方法
 如图
 ![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/13.png)
+
+## 后台
+### 后台主要用户权限角色管理，子商户配置，分配开发者的appid，对账，订单等功能
+如下图所示：
+支付概况
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/1.png)
+
+权限角色管理
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/2.png)
+
+订单管理
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/3.png)
+
+子商户管理
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/4.png)
+
+支付汇总
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/6.png)
+
+商户交易汇总
+![](https://github.com/Leslin/Weixin-Payment/blob/master/screenshot/7.png)
+
+
+## 其他说明
+交流QQ群号：645233951
+## 版权信息
+
+遵循Apache2开源协议发布，并提供免费使用。
+
+
+更多细节参阅 [LICENSE.txt](LICENSE.txt)
