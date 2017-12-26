@@ -11,6 +11,10 @@ use app\api\swiftpass\ClientResponseHandler;
 use app\api\swiftpass\PayHttpClient;
 use app\api\swiftpass\Config;
 
+/** 
+ * 第三方调用说明
+ * 威富通支付
+ */
 class Swiftpass extends Controller {
 
 	public function __construct(){
